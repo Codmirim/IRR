@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Fisioterapia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .responses {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9f7ef;
+            border: 1px solid #d4edda;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulário de Avaliação</h1>
+        <form id="fisioterapia-form">
+            <!-- Informações Básicas -->
+            <h2>Informações Básicas</h2>
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="data-nascimento">Data de Nascimento:</label>
+            <input type="date" id="data-nascimento" name="data-nascimento" required>
+
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco">
+
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <!-- Histórico Médico -->
+            <h2>Histórico Médico</h2>
+            <label>Marque as opções que se aplicam:</label>
+            <input type="checkbox" id="doenca-cronica" name="historico[]" value="Doença crônica">
+            <label for="doenca-cronica">Doença crônica</label>
+
+            <input type="checkbox" id="cirurgia" name="historico[]" value="Cirurgia anterior">
+            <label for="cirurgia">Cirurgia anterior</label>
+
+            <input type="checkbox" id="medicamentos" name="historico[]" value="Uso de medicamentos">
+            <label for="medicamentos">Uso de medicamentos</label>
+
+            <input type="checkbox" id="alergias" name="historico[]" value="Alergias">
+            <label for="alergias">Alergias</label>
+
+            <input type="checkbox" id="outros" name="historico[]" value="Outros">
+            <label for="outros">Outros</label>
+
+            <!-- Queixa Principal -->
+            <h2>Queixa Principal</h2>
+            <label for="queixa">Descreva a sua principal queixa:</label>
+            <textarea id="queixa" name="queixa" rows="4"></textarea>
+
+            <!-- Indicação -->
+            <h2>Indicação</h2>
+            <label for="indicacao">Como você soube da clínica?</label>
+            <select id="indicacao" name="indicacao">
+                <option value="Amigo/Parente">Amigo/Parente</option>
+                <option value="Publicidade">Publicidade</option>
+                <option value="Outro">Outro</option>
+            </select>
+
+            <label for="nome-indicacao">Se foi por indicação, quem indicou?</label>
+            <input type="text" id="nome-indicacao" name="nome-indicacao">
+
+            <label for="fisioterapeuta">Existe algum fisioterapeuta de preferência?</label>
+            <input type="text" id="fisioterapeuta" name="fisioterapeuta">
+
+            <!-- Objetivos -->
+            <h2>Objetivos com a Fisioterapia</h2>
+            <label for="objetivos">Quais são os seus principais objetivos?</label>
+            <textarea id="objetivos" name="objetivos" rows="4"></textarea>
+
+            <!-- Enviar -->
+            <button type="button" onclick="submitForm()">Enviar</button>
+        </form>
+
+        <!-- Respostas -->
+        <div id="responses" class="responses" style="display: none;">
+            <h2>Respostas Enviadas</h2>
+            <p id="response-content"></p>
+        </div>
+    </div>
+
+    <script>
+        function submitForm() {
+            // Obter valores do formulário
+            const nome = document.getElementById('nome').value;
+            const dataNascimento = document.getElementById('data-nascimento').value;
+            const endereco = document.getElementById('endereco').value;
+            const telefone = document.getElementById('telefone').value;
+            const email = document.getElementById('email').value;
+            const queixa = document.getElementById('queixa').value;
+            const indicacao = document.getElementById('indicacao').value;
+            const nomeIndicacao = document.getElementById('nome-indicacao').value;
+            const fisioterapeuta = document.getElementById('fisioterapeuta').value;
+            const objetivos = document.getElementById('objetivos').value;
+
+            // Histórico Médico (checkboxes)
+            const historico = [];
+            document.querySelectorAll('input[name="historico[]"]:checked').forEach((checkbox) => {
+                historico.push(checkbox.value);
+            });
+
+            // Exibir as respostas
+            const responseContent = `
+                <strong>Nome:</strong> ${nome}<br>
+                <strong>Data de Nascimento:</strong> ${dataNascimento}<br>
+                <strong>Endereço:</strong> ${endereco}<br>
+                <strong>Telefone:</strong> ${telefone}<br>
+                <strong>E-mail:</strong> ${email}<br>
+                <strong>Histórico Médico:</strong> ${historico.join(', ')}<br>
+                <strong>Queixa Principal:</strong> ${queixa}<br>
+                <strong>Indicação:</strong> ${indicacao}<br>
+                <strong>Nome de Quem Indicou:</strong> ${nomeIndicacao}<br>
+                <strong>Fisioterapeuta Preferido:</strong> ${fisioterapeuta}<br>
+                <strong>Objetivos:</strong> ${objetivos}
+            `;
+
+            document.getElementById('response-content').innerHTML = responseContent;
+            document.getElementById('responses').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
